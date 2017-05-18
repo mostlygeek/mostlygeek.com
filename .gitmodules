@@ -1,6 +1,0 @@
-[submodule "blog/themes/themes/heather-hugo"]
-	path = blog/themes/themes/heather-hugo
-	url = https://github.com/hbpasti/heather-hugo
-[submodule "blog/themes/heather-hugo"]
-	path = blog/themes/heather-hugo
-	url = https://github.com/hbpasti/heather-hugo
