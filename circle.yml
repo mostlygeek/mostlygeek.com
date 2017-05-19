@@ -31,6 +31,20 @@ deployment:
   s3up:
     branch: master
     commands:
+      - >
+        curl -s
+        --form-string "token=$PUSHOVER_APP_TOKEN"
+        --form-string "user=$PUSHOVER_USER_KEY"
+        --form-string "message=blog deploy start"
+        https://api.pushover.net/1/messages.json
+
       # updates: http://mostlygeek.com.s3-website-us-east-1.amazonaws.com
-      - ls -lR public/
       - s3deploy -source=public/ -region=us-east-1 -bucket=mostlygeek.com
+
+      - >
+        curl -s
+        --form-string "token=$PUSHOVER_APP_TOKEN"
+        --form-string "user=$PUSHOVER_USER_KEY"
+        --form-string "message=blog deploy complete"
+        https://api.pushover.net/1/messages.json
+
