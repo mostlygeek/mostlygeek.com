@@ -2,6 +2,7 @@ baseURL = "https://mostlygeek.com/"
 languageCode = "en-us"
 title = "Benson's Blog"
 theme = "hyde"
+MetaDataFormat = "yaml"
 
 [params]
     themeColor = "theme-base-0f"
