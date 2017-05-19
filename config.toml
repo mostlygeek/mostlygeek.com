@@ -3,5 +3,6 @@ languageCode = "en-us"
 title = "Benson's Blog"
 theme = "hyde"
 MetaDataFormat = "yaml"
+enableRobotsTXT = true
 
 [params]
