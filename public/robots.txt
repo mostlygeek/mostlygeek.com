@@ -1,0 +1,2 @@
+User-agent: *
+# no rules for now
