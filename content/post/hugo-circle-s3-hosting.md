@@ -59,6 +59,7 @@ Complex and lots of pieces. This is really for highly technical people... though
 * install [s3deploy](https://github.com/bep/s3deploy)
 * Publishing to S3
 * Using that IAM user (env variables)
+* set AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY env variables in circle's configuration
 
 
 ## Making it fast and secure
@@ -75,8 +76,4 @@ Complex and lots of pieces. This is really for highly technical people... though
   - not entirely necessary. HTTP is fine for serving a static website
       - however, HTTPS gives more guarantees that content wasn't changed by somebody in the middle
 
-
-
-* AWS Setup
-* CircleCI setup
 I

@@ -31,4 +31,5 @@ deployment:
   s3up:
     branch: master
     commands:
+      # updates: http://mostlygeek.com.s3-website-us-east-1.amazonaws.com
       - s3deploy -source=public/ -region=us-east-1 -bucket=mostlygeek.com
