@@ -5,4 +5,3 @@ theme = "hyde"
 MetaDataFormat = "yaml"
 
 [params]
-    themeColor = "theme-base-0f"
