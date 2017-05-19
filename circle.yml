@@ -27,8 +27,8 @@ test:
     - hugo -v
     - ls -l public
 
-#deployment:
-#  s3up:
-#    branch: master
-#    commands:
-#      - s3deploy -source=public/ -region=eu-west-1 -bucket=bego.io
+deployment:
+  s3up:
+    branch: master
+    commands:
+      - s3deploy -source=public/ -region=us-east-1 -bucket=mostlygeek.com
