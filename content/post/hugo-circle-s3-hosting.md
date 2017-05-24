@@ -1,12 +1,10 @@
 ---
 date: "2017-05-17T15:02:42-07:00"
 draft: true
-title: "hugo circle s3 hosting"
+title: "How mostlygeek.com is hosted"
 ---
 
-# Publishing from Hugo to S3+Cloudfront
-
-My first static website (90's). All you had to do was write HTML and FTP it somewhere. This is still another static website but now we have a lot of abstraction to make things easier. What we really want to get to is this idea workflow: 
+## Notes: 
 
 1. Write a blog or an article 
 2. git commit / push it to Github 
@@ -23,14 +21,25 @@ Perhaps I should make a shell script that automates a lot of these pieces?
 
 Complex and lots of pieces. This is really for highly technical people... though some of the parts can be made *faster* with a shell script. 
 
-## Setting up Hugo
+## Using Hugo
+
+* It's not a "blogging engine". It's a static website generator. This means it creates HTML pages
+    * making a blog is one of those things you can do... 
+    * how your site looks is done through templates
+* content is rendered on your website like how you organize your source
 * A new Markdown editor (macdown)
-	* detect front matter
+    * detect front matter
 * Hugo Installation
 	* config.toml
 		* `MetaDataFormat = "yaml"` - works better with macdown for rendering frontmatter
 
+My first static website (90's). All you had to do was write HTML and FTP it somewhere. This is still another static website but now we have a lot of abstraction to make things easier. What we really want to get to is this idea workflow: 
+
+
 ## GitHub
+
+* 
+
 ## Setting up AWS
 * S3 Setup
 
