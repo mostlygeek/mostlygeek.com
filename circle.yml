@@ -1,50 +1,71 @@
 machine:
   environment:
+    #
+    # define environment variables used by the rest of the script
+    # Note:
+    #   $AWS_ACCESS_KEY_ID and $AWS_SECRET_ACCESS_KEY are secret
+    #   and are defined via CircleCI's UI.
+    #
     HUGO_VERSION: 0.20.7
+    HUGO_ARCHIVE: hugo_${HUGO_VERSION}_Linux-64bit.tar.gz
+    HUGO_SRC: https://github.com/spf13/hugo/releases/download/v${HUGO_VERSION}/$HUGO_ARCHIVE
     CIRCLE_BUILD_DIR: $HOME/$CIRCLE_PROJECT_REPONAME
     PATH: $PATH:$CIRCLE_BUILD_DIR/bin
+
   post:
     - mkdir -p $CIRCLE_BUILD_DIR/bin
+
+# Install hugo, pygments and s3deploy tools. These are not included
+# in CircleCI's environment so they must be installed manually.
 dependencies:
-  cache_directories:
-    - bin
   pre:
-    # Hugo, Pygments and s3deploy dependencies
     - >
-      if [ ! -e $CIRCLE_BUILD_DIR/bin/hugo ] || [[ `hugo version` =~ v${HUGO_VERSION} ]]; then
-        wget https://github.com/spf13/hugo/releases/download/v${HUGO_VERSION}/hugo_${HUGO_VERSION}_Linux-64bit.tar.gz;
-        tar xvzf hugo_${HUGO_VERSION}_Linux-64bit.tar.gz -C $CIRCLE_BUILD_DIR/bin;
+      if [ ! -e $CIRCLE_BUILD_DIR/bin/hugo ] || [[ `hugo version` =~ v${HUGO_VERSION} ]];
+      then
+          wget $HUGO_SRC;
+          tar xvzf hugo_${HUGO_VERSION}_Linux-64bit.tar.gz -C $CIRCLE_BUILD_DIR/bin;
       fi
 
+    # pygments required for syntax highlighting
     - pip install Pygments
+
+    # s3deploy simplifies static site deployment to S3
     - go get -v github.com/bep/s3deploy
 
-# overload the `test` step to build the static assets
+  # speed things up for future builds
+  cache_directories:
+    - bin
+
+# use CircleCI's test stage to build the static site. If hugo exits
+# with an error CircleCI will abort immediately.
 test:
-  pre:
-    - pygmentize -V
   override:
     - hugo -v
-    - ls -l public
 
 deployment:
   s3up:
+    # deploy new assets to S3 when the `master` branch is updated.
     branch: master
     commands:
       # updates: http://mostlygeek.com.s3-website-us-east-1.amazonaws.com
       - s3deploy -source=public/ -region=us-east-1 -bucket=mostlygeek.com
 
-      # clear out cloudfront's cache
+      # Invalidate everything in the CDN. Since we do not know what
+      # changed it is easier to just dump everything. Not a big
+      # deal since mostlygeek.com isn't a massive site.
+      #
+      # This is an async step. This task does not wait for the CDN
+      # to invalidate objects before continuing.
       - aws configure set preview.cloudfront true
       - >
         aws cloudfront create-invalidation
         --distribution-id $CLOUDFRONT_DISTRIBUTION_ID
         --paths '/*'
 
+      # ping myself when the deployment steps have completed
       - >
         curl -s
         --form-string "token=$PUSHOVER_APP_TOKEN"
         --form-string "user=$PUSHOVER_USER_KEY"
         --form-string "message=blog deploy complete"
         https://api.pushover.net/1/messages.json
-
