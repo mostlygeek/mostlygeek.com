@@ -65,7 +65,7 @@ deployment:
       # ping myself when the deployment steps have completed
       # only if PUSHOVER credentials have been set in CircleCI's UI
       - >
-        if [ ! -z $PUSHOVER_APP_TOKEN ];
+        if [ ! -z "$PUSHOVER_APP_TOKEN" ];
         then
           curl --silent
           --form-string "token=$PUSHOVER_APP_TOKEN"
