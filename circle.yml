@@ -33,7 +33,7 @@ dependencies:
 
   # speed things up for future builds
   cache_directories:
-    - bin
+    - $CIRCLE_BUILD_DIR/bin
 
 # use CircleCI's test stage to build the static site. If hugo exits
 # with an error CircleCI will abort immediately.
