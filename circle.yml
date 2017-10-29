@@ -66,9 +66,10 @@ deployment:
       # only if PUSHOVER credentials have been set in CircleCI's UI
       - >
         if [ ! -z "$PUSHOVER_APP_TOKEN" ]; then
-        curl --silent
-        --form-string "token=$PUSHOVER_APP_TOKEN"
-        --form-string "user=$PUSHOVER_USER_KEY"
-        --form-string "message=blog deploy complete"
-        "https://api.pushover.net/1/messages.json";
+            curl
+              --silent
+              --form-string "token=$PUSHOVER_APP_TOKEN"
+              --form-string "user=$PUSHOVER_USER_KEY"
+              --form-string "message=blog deploy complete"
+              "https://api.pushover.net/1/messages.json";
         fi
