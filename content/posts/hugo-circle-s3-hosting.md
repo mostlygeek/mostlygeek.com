@@ -45,7 +45,9 @@ There's some hidden magic you don't see in the source above.  There are some sec
 * `PUSHOVER_APP_TOKEN`
 * `PUSHOVER_USER_KEY`
 
-I skipped the pushover setup. I'm lazy and using Pushover to notify me when the site's deployed spares me from having to do it manually.
+I skipped the pushover setup. I'm lazy and using Pushover to notify me when the site's deployed so I don't have to check it manually. 
+
+Check out my [CircleCI deploy logs](https://circleci.com/gh/mostlygeek/mostlygeek.com/tree/master) to see the above configuration in action. You may notice some (many) trial and error attempts at fixing weird bugs.
 
 ## Hosting on AWS
 
