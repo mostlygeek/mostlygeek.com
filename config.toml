@@ -6,3 +6,4 @@ MetaDataFormat = "yaml"
 enableRobotsTXT = true
 
 [params]
+pygmentsuseclasses = true

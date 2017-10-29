@@ -1,12 +1,14 @@
 machine:
   environment:
     #
-    # define environment variables used by the rest of the script
-    # Note:
-    #   $AWS_ACCESS_KEY_ID and $AWS_SECRET_ACCESS_KEY are secret
-    #   and are defined via CircleCI's UI.
+    # Define environment variables used by the rest of the script
+    # These control the operation of the script
     #
-    HUGO_VERSION: 0.20.7
+    # Note:
+    #   $AWS_ACCESS_KEY_ID and $AWS_SECRET_ACCESS_KEY are required
+    #   but they are defined in CircleCI's UI.
+    #
+    HUGO_VERSION: 0.30.2
     HUGO_ARCHIVE: hugo_${HUGO_VERSION}_Linux-64bit.tar.gz
     HUGO_SRC: https://github.com/spf13/hugo/releases/download/v${HUGO_VERSION}/$HUGO_ARCHIVE
     CIRCLE_BUILD_DIR: $HOME/$CIRCLE_PROJECT_REPONAME
@@ -26,9 +28,6 @@ dependencies:
           tar xvzf hugo_${HUGO_VERSION}_Linux-64bit.tar.gz -C $CIRCLE_BUILD_DIR/bin;
       fi
 
-    # pygments required for syntax highlighting
-    - pip install Pygments
-
     # s3deploy simplifies static site deployment to S3
     - go get -v github.com/bep/s3deploy
 
@@ -47,6 +46,7 @@ deployment:
     # deploy new assets to S3 when the `master` branch is updated.
     branch: master
     commands:
+
       # updates: http://mostlygeek.com.s3-website-us-east-1.amazonaws.com
       - s3deploy -source=public/ -region=us-east-1 -bucket=mostlygeek.com
 
@@ -63,9 +63,13 @@ deployment:
         --paths '/*'
 
       # ping myself when the deployment steps have completed
+      # only if PUSHOVER credentials have been set in CircleCI's UI
       - >
-        curl -s
-        --form-string "token=$PUSHOVER_APP_TOKEN"
-        --form-string "user=$PUSHOVER_USER_KEY"
-        --form-string "message=blog deploy complete"
-        https://api.pushover.net/1/messages.json
+        if [ ! -z $PUSHOVER_APP_TOKEN ];
+        then
+          curl -s
+          --form-string "token=$PUSHOVER_APP_TOKEN"
+          --form-string "user=$PUSHOVER_USER_KEY"
+          --form-string "message=blog deploy complete"
+          https://api.pushover.net/1/messages.json
+        fi

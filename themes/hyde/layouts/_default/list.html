@@ -4,10 +4,14 @@
 {{ partial "sidebar.html" . }}
 
   <div class="content container">
-    <ul class="posts">
-        {{ range .Data.Pages }}
+   <ul class="posts">
+        {{ range .Data.Pages.ByDate }}
         <li>
-          <span><a href="{{ .Permalink }}">{{ .Title }}</a> <time class="pull-right post-list">{{ .Date.Format "Mon, Jan 2, 2006" }}</time></span>
+        <span><a href="{{ .Permalink }}">{{ .Title }}</a></span>
+        {{ if .Description }}
+        <br/>
+        <span class="description">{{ .Description }}</span>
+        {{end}}
         </li>
         {{ end }}
     </ul>
