@@ -1,0 +1,51 @@
+<html>
+  <head>
+    <style>
+    body {
+      background-color: #000;
+      color: #009933;
+      font-size: 18pt;
+      font-family:  "Courier New", Courier, monospace;
+    }
+    a {
+      color: #FFF;
+    }
+    .blink {
+        animation-duration: 1s;
+        animation-name: blink;
+        animation-iteration-count: infinite;
+        animation-direction: alternate;
+        animation-timing-function: ease-in-out;
+    }
+    @keyframes blink {
+        0% {
+            opacity: 1;
+        }
+        80% {
+            opacity: 1;
+        }
+        81% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 0;
+        }
+    }
+    </style>
+  </head>
+  <body>
+    <h1>mostlygeek.com</h1>
+
+    <pre>
+&gt; cat ~/info.txt
+Hi.  Somehow you landed on my domain.
+There are few places you can find me on the internet:
+
+  - twitter: <a href="https://twitter.com/mostlygeek">@mostlygeek</a>
+  - github : <a href="https://github.com/mostlygeek">github.com/mostlygeek</a>
+  - email  : mostlygeek@gmail.com
+
+&gt; <span class="blink">_</span>
+    </pre>
+  </body>
+</html>
