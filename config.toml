@@ -1,9 +1,0 @@
-baseURL = "https://mostlygeek.com/"
-languageCode = "en-us"
-title = "mostlygeek"
-theme = "hyde"
-MetaDataFormat = "yaml"
-enableRobotsTXT = true
-
-[params]
-pygmentsuseclasses = true
